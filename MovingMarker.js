@@ -21,6 +21,12 @@ L.Marker.MovingMarker = L.Marker.extend({
         loop: false,
     },
 
+    _durationScale: 1,
+
+    setDurationScale: function(scale) {
+        _durationScale = scale;
+    },
+
     initialize: function (latlngs, durations, options) {
         L.Marker.prototype.initialize.call(this, latlngs[0], options);
 
@@ -210,7 +216,7 @@ L.Marker.MovingMarker = L.Marker.extend({
 
     _loadLine: function(index) {
         this._currentIndex = index;
-        this._currentDuration = this._durations[index];
+        this._currentDuration = this._durations[index] / this._durationScale;
         this._currentLine = this._latlngs.slice(index, index + 2);
     },
 
