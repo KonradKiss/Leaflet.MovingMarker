@@ -216,7 +216,7 @@ L.Marker.MovingMarker = L.Marker.extend({
 
     _loadLine: function(index) {
         this._currentIndex = index;
-        this._currentDuration = this._durations[index] / this._durationScale;
+        this._currentDuration = this._durations[index];
         this._currentLine = this._latlngs.slice(index, index + 2);
     },
 
@@ -236,7 +236,7 @@ L.Marker.MovingMarker = L.Marker.extend({
         }
 
         var lineIndex = this._currentIndex;
-        var lineDuration = this._currentDuration;
+        var lineDuration = this._currentDuration / this._durationScale;
         var stationDuration;
 
         while (elapsedTime > lineDuration) {
