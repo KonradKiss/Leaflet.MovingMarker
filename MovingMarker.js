@@ -24,7 +24,7 @@ L.Marker.MovingMarker = L.Marker.extend({
     _durationScale: 1,
 
     setDurationScale: function(scale) {
-        _durationScale = scale;
+        this._durationScale = scale;
     },
 
     initialize: function (latlngs, durations, options) {
