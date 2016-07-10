@@ -22,9 +22,22 @@ L.Marker.MovingMarker = L.Marker.extend({
     },
 
     _durationScale: 1,
+    _lastDurationScale: 1,
 
     setDurationScale: function(scale) {
         this._durationScale = scale;
+        var now = new Date().getTime();
+        var elapsed = this._startTime - now;
+        var ratio = this._durationScale / this._lastDurationScale;
+        this._lastDurationScale = this._durationScale;
+        elapsed /= ratio;
+        this._startTime = now - elapsed;
+
+        for (var i = 0; i < this._durations.length; i++) {
+            this._durations[i] = this._durations[i] / ratio;
+        }
+
+        this._loadLine(Math.max(0, this._currentIndex - 1));
     },
 
     initialize: function (latlngs, durations, options) {
@@ -236,7 +249,7 @@ L.Marker.MovingMarker = L.Marker.extend({
         }
 
         var lineIndex = this._currentIndex;
-        var lineDuration = this._currentDuration / this._durationScale;
+        var lineDuration = this._currentDuration;
         var stationDuration;
 
         while (elapsedTime > lineDuration) {
